@@ -1,33 +1,35 @@
 {
-  "name": "rename-paths",
-  "description": "Return src-dest mappings from an array of filepaths, based on options passed.",
+  "name": "rename-path",
+  "description": "Return a mapped dest for a src a filepath.",
   "version": "0.1.0",
-  "homepage": "https://github.com/jonschlinkert/rename-paths",
+  "homepage": "https://github.com/jonschlinkert/rename-path",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jonschlinkert/rename-paths.git"
+    "url": "git://github.com/jonschlinkert/rename-path.git"
   },
   "bugs": {
-    "url": "https://github.com/jonschlinkert/rename-paths/issues"
+    "url": "https://github.com/jonschlinkert/rename-path/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/jonschlinkert/rename-paths/blob/master/LICENSE-MIT"
+      "url": "https://github.com/jonschlinkert/rename-path/blob/master/LICENSE-MIT"
     }
   ],
   "keywords": [
-    "docs",
-    "documentation",
-    "generate",
-    "generator",
-    "markdown",
-    "templates",
-    "verb"
+    "ext",
+    "extname",
+    "extensions",
+    "extension",
+    "utils",
+    "path",
+    "filepath",
+    "fs",
+    "file"
   ],
   "main": "index.js",
   "engines": {
@@ -42,7 +44,8 @@
     "mocha": "*"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "parse-filepath": "^0.2.1"
+    "ext-ext": "^0.1.0",
+    "parse-filepath": "^0.3.0",
+    "relative": "^0.1.4"
   }
 }

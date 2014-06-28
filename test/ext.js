@@ -1,15 +1,15 @@
-/*!
- * map-paths <https://github.com/jonschlinkert/map-paths>
+/**
+ * rename-path <https://github.com/jonschlinkert/rename-path>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014, Jon Schlinkert, contributors.
  * Licensed under the MIT License
+ *
  */
-'use strict';
 
 var expect = require('chai').expect;
-var ext = require('../lib/ext');
+var ext = require('ext-ext');
 
-describe('utils.ext()', function() {
+describe('ext()', function() {
   describe('when a filename with an extension is passed and options.ext is defined:', function() {
     var filepath = 'foo/bar/baz.min.js';
 
