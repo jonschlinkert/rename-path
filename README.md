@@ -18,11 +18,11 @@ var filepath = 'a/b/c.js';
 console.log(rename(filepath, {ext: '.min.js'}));
 //=> 'a/b/c.min.js'
 
-console.log(rename(filepath, {destBase: 'dist', flatten: true, ext: '.min.js'}));
-//=> 'c.min.js'
+console.log(rename(filepath, {destBase: 'dist', ext: '.min.js'}));
+//=> 'dist/a/b/c.min.js'
 
 console.log(rename(filepath, {flatten: true, ext: '.min.js'}));
-//=> 'dist/a/b/c.min.js'
+//=> 'c.min.js'
 ```
 
 See [the tests](./test) for more examples.
