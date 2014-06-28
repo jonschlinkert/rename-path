@@ -13,16 +13,16 @@ npm i rename-path --save-dev
 
 ```js
 var rename = require('rename-paths');
-var filepath = 'foo/bar/baz.min.js';
+var filepath = 'a/b/c.js';
 
 console.log(rename(filepath, {ext: '.min.js'}));
-//=> 'foo/bar/baz.min.js'
+//=> 'a/b/c.min.js'
 
 console.log(rename(filepath, {destBase: 'dist', flatten: true, ext: '.min.js'}));
-//=> 'dist/foo/bar/baz.min.js'
+//=> 'dist/a/b/c.min.js'
 
 console.log(rename(filepath, {flatten: true, ext: '.min.js'}));
-//=> 'baz.min.js'
+//=> 'c.min.js'
 ```
 
 See [the tests](./test) for more examples.
