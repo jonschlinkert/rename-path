@@ -18,7 +18,9 @@ var flatten = function(filepath) {
 };
 
 var removeSrcBase = function(filepath, options) {
-  return filepath.replace((options && options.srcBase) || process.cwd(), '');
+  options = options || {};
+  var prefix = options.srcBase && (options.srcBase === true);
+  return filepath.replace(options.srcBase, '');
 };
 
 var normalizePath = function(filepath) {
@@ -43,18 +45,21 @@ module.exports = function renamePaths(filepath, options) {
   var ext = options.ext || extname(filepath, options);
 
   // Strip the srcBase or cwd from the filepath
-  filepath = removeSrcBase(filepath)
+  filepath = removeSrcBase(filepath, options)
 
   if (options.flatten) {
     filepath = flatten(filepath);
   }
 
+
   // Create the destination filepath.
   var dest = createDest(filepath, ext);
 
-  if (options.cwd) {
-    if (options.prefixBase && options.prefixBase === true) {
+  if (options.cwd && options.hasOwnProperty('prefixBase')) {
+    if (options.prefixBase === true) {
       dest = path.join(options.cwd, dest);
+    } else if (options.prefixBase === false) {
+      dest = dest;
     }
   }
 
