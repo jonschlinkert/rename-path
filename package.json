@@ -1,7 +1,7 @@
 {
   "name": "rename-path",
   "description": "Return a mapped dest for a src a filepath.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/rename-path",
   "author": {
     "name": "Jon Schlinkert",

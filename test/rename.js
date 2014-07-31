@@ -12,7 +12,7 @@ var parsePath = require('..');
 
 describe('parsePath()', function() {
   describe('when options.ext is defined:', function() {
-    var options = {ext: '.js'};
+    var options = {ext: '.js', normalize: true};
 
     it('should change the extension.', function () {
       var actual = 'foo/bar.json';
@@ -34,7 +34,7 @@ describe('parsePath()', function() {
   });
 
   describe('when options.flatten is defined:', function() {
-    var options = {flatten: true};
+    var options = {flatten: true, normalize: true};
 
     it('should strip the dirname from the generated path.', function () {
       var fixture = 'foo/bar.js';
@@ -44,7 +44,7 @@ describe('parsePath()', function() {
   });
 
   describe('when options.destBase is defined:', function() {
-    var options = {destBase: 'dist'};
+    var options = {destBase: 'dist', normalize: true};
 
     it('should prepend the destBase to the generated path.', function () {
       var fixture = 'foo/bar.js';
@@ -54,7 +54,7 @@ describe('parsePath()', function() {
   });
 
   describe('when options.prefixBase is defined:', function() {
-    var options = {prefixBase: true};
+    var options = {prefixBase: true, normalize: true};
 
     it('should prepend the src dirname to the generated path.', function () {
       var fixture = 'a/b/c/d/e/f/g.js';
@@ -64,7 +64,7 @@ describe('parsePath()', function() {
   });
 
   describe('when options.srcBase is defined:', function() {
-    var options = {srcBase: 'a/b/c', prefixBase: false};
+    var options = {srcBase: 'a/b/c', prefixBase: false, normalize: true};
 
     it('should strip the srcBase from the file path.', function () {
       var fixture = 'd/e/f/g.js';
@@ -74,7 +74,7 @@ describe('parsePath()', function() {
   });
 
   describe('when options.srcBase and prefixBase are defined:', function() {
-    var options = {srcBase: 'a/b/c', prefixBase: true};
+    var options = {srcBase: 'a/b/c', prefixBase: true, normalize: true};
 
     it('should prefix the srcBase to the dest path.', function () {
       var fixture = 'd/e/f/g.js';
@@ -84,7 +84,7 @@ describe('parsePath()', function() {
   });
 
   describe('when destBase is defined:', function() {
-    var options = {prefixBase: true, destBase: 'dist'};
+    var options = {prefixBase: true, destBase: 'dist', normalize: true};
 
     it('should prepend the destBase to the generated path', function () {
       var fixture = 'a/b/c/d/e/f/g.js';
@@ -94,7 +94,7 @@ describe('parsePath()', function() {
   });
 
   describe('when prefixBase and destBase are defined:', function() {
-    var options = {prefixBase: true, srcBase: 'src', destBase: 'dist'};
+    var options = {prefixBase: true, srcBase: 'src', destBase: 'dist', normalize: true};
 
     it('should prefix the destBase/srcBase to the generated path', function () {
       var fixture = 'a/b/c/d/e/f/g.js';
@@ -106,10 +106,12 @@ describe('parsePath()', function() {
 
 describe('basic mapping', function () {
   it('default options should create same-to-same src-dest mappings.', function (done) {
-    var actual = ['a.txt', 'b.txt', 'c.txt'].map(function(filepath) {
-      return parsePath(filepath, {destBase: 'dist'});
+    var actual = ['a.txt', 'b.txt', 'c.txt'].map(function (filepath) {
+      return parsePath(filepath, {
+        destBase: 'dist',
+        normalize: true
+      });
     });
-
     var expected = ['dist/a.txt', 'dist/b.txt', 'dist/c.txt'];
     expect(actual).to.eql(expected);
     done();
@@ -119,7 +121,7 @@ describe('basic mapping', function () {
 describe('options.srcBase', function () {
   it('default options should create same-to-same src-dest mappings.', function (done) {
     var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function(filepath) {
-      return parsePath(filepath, {srcBase: 'foo', prefixBase: true});
+      return parsePath(filepath, {srcBase: 'foo', prefixBase: true, normalize: true});
     });
 
     var expected = ['foo/a.txt', 'foo/bar/b.txt', 'foo/bar/baz/c.txt'];
@@ -131,7 +133,7 @@ describe('options.srcBase', function () {
 describe('options.destBase', function () {
   it('should prefix destBase with a trailing slash', function (done) {
     var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function(filepath) {
-      return parsePath(filepath, {destBase: 'foo/'});
+      return parsePath(filepath, {destBase: 'foo/', normalize: true});
     });
 
     var expected = ['foo/a.txt', 'foo/bar/b.txt', 'foo/bar/baz/c.txt'];
@@ -141,7 +143,7 @@ describe('options.destBase', function () {
 
   it('should prefix destBase without a trailing slash', function (done) {
     var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function(filepath) {
-      return parsePath(filepath, {destBase: 'foo'});
+      return parsePath(filepath, {destBase: 'foo', normalize: true});
     });
 
     var expected = ['foo/a.txt', 'foo/bar/b.txt', 'foo/bar/baz/c.txt'];
@@ -162,11 +164,14 @@ describe('options.flatten', function () {
   });
 });
 
-
 describe('options.flatten + options.destBase', function () {
   it('should remove the dirname', function (done) {
-    var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function(filepath) {
-      return parsePath(filepath, {flatten: true, destBase: 'blah'});
+    var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function (filepath) {
+      return parsePath(filepath, {
+        flatten: true,
+        destBase: 'blah',
+        normalize: true
+      });
     });
 
     var expected = ['blah/a.txt', 'blah/b.txt', 'blah/c.txt'];
@@ -175,11 +180,15 @@ describe('options.flatten + options.destBase', function () {
   });
 });
 
-
 describe('options.ext', function () {
   it('should remove the dirname', function (done) {
-    var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function(filepath) {
-      return parsePath(filepath, {flatten: true, destBase: 'blah', ext: '.js'});
+    var actual = ['a.txt', 'bar/b.txt', 'bar/baz/c.txt'].map(function (filepath) {
+      return parsePath(filepath, {
+        flatten: true,
+        destBase: 'blah',
+        ext: '.js',
+        normalize: true
+      });
     });
 
     var expected = ['blah/a.js', 'blah/b.js', 'blah/c.js'];

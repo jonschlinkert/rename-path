@@ -20,7 +20,7 @@ var flatten = function(filepath) {
 var removeSrcBase = function(filepath, options) {
   options = options || {};
   var prefix = options.srcBase && (options.srcBase === true);
-  return filepath.replace(options.srcBase, '');
+  return filepath.replace(prefix, '');
 };
 
 var normalizePath = function(filepath) {
@@ -55,21 +55,20 @@ module.exports = function renamePaths(filepath, options) {
   // Create the destination filepath.
   var dest = createDest(filepath, ext);
 
-  if (options.cwd && options.hasOwnProperty('prefixBase')) {
-    if (options.prefixBase === true) {
-      dest = path.join(options.cwd, dest);
-    } else if (options.prefixBase === false) {
-      dest = dest;
-    }
+  if (options.cwd && options.hasOwnProperty('prefixBase') && options.prefixBase === true) {
+    dest = path.join(options.cwd, dest);
   }
 
   if (options.destBase) {
     dest = path.join(options.destBase, dest);
   }
 
-  var result = normalizePath(dest);
-  if (options.rename) {
-    return options.rename.call(options, result);
+  if (options.normalize) {
+    dest = normalizePath(dest);
   }
-  return result;
+
+  if (options.rename) {
+    return options.rename.call(options, dest);
+  }
+  return dest;
 };
